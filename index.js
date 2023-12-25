@@ -86,4 +86,71 @@ var finances = [
     ['Jan-2017', 138230],
     ['Feb-2017', 671099],
   ];
-  
+  let sum = 0;
+let change = [];
+let count = 0;
+let total = 0;
+let months = [];
+let monthlyProfit = [];
+
+/* length of array */
+
+let numMonths = finances.length;
+
+/* total */
+
+for (let i = 0; i < finances.length; i++) {
+  sum += finances[i][1];
+}
+
+/* average change in profit/losses */
+
+for (let i = 1; i < finances.length; i++) {
+  change.push(finances[i][1] - finances[i - 1][1]);
+}
+
+/* calculate averge */
+
+for (let i = 0; i < change.length; i++) {
+  if (change[i] !== undefined) {
+      count++;
+      total += change[i];
+  }
+}
+
+let average = Math.round((total / count) * 100) / 100;
+
+/* create variable for months */
+
+for (let i = 1; i < finances.length; i++) {
+  months.push(finances[i][0]);
+}
+
+/* merge months and change variables into one nested array */
+
+for (let i = 0; i < months.length; i++) {
+  monthlyProfit.push([months[i], change[i]]);
+}
+
+/* month with the greatest increase in profit */
+
+let max = Math.max(...change);
+
+let maxMonth = monthlyProfit[change.indexOf(max)][0];
+
+/* month with the greatest decrease in profit */
+
+let min = Math.min(...change);
+
+let minMonth = monthlyProfit[change.indexOf(min)][0];
+
+/* console.log */
+
+console.log(`
+Financial Analysis
+----------------------------
+Total Months: ${numMonths}
+Total: $${sum}
+Average Change: $${average}
+Greatest Increase in Profits:  ${maxMonth} $${max}
+Greatest Decrease in Profits: ${minMonth} $${min}`);
